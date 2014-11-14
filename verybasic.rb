@@ -58,6 +58,10 @@ class Demo < BasicGame
       @ball_y = 200
       @ball_angle = 45
     end
+
+    if @ball_x >= @paddle_x && @ball_x <= (@paddle_x + @paddle.width) && @ball_y.round >= (400 - @ball.height)
+      @ball_angle = (@ball_angle + 90) % 360
+    end
   end
 end
 
