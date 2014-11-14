@@ -37,6 +37,14 @@ class Demo < BasicGame
     input = container.get_input
     container.exit if input.is_key_down Input::KEY_ESCAPE
 
+    if input.is_key_down(Input::KEY_LEFT) && @paddle_x > 0
+      @paddle_x -= 0.3 * delta
+    end
+
+    if input.is_key_down(Input::KEY_RIGHT) && @paddle_x < container.width - @paddle.width
+      @paddle_x += 0.3 * delta
+    end
+
     @ball_x += 0.3 * delta * Math.cos(@ball_angle * Math::PI / 180)
     @ball_y -= 0.3 * delta * Math.sin(@ball_angle * Math::PI / 180)
 
