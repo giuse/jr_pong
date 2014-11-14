@@ -1,4 +1,5 @@
 require 'constants'
+require 'elements'
 
 # This class works by calling `init` upon construction, then `update`
 # and `render` at each timestep.
@@ -16,9 +17,9 @@ class SimplePong < BasicGame
   #
   def init container
     # Background is a fullscreen png
-    @bg     = Image.new BG_IMG
+    @bg     = Background.new BG_IMG
     # Ball has a x and y coordinate, plus angle of motion direction
-    @ball   = Image.new BALL_IMG
+    @ball   = Ball.new BALL_IMG, [200, 200, 45]
     # Paddle has fixed y, and x corresponds to the left corner
     @paddle = Image.new PADDLE_IMG
 
@@ -35,17 +36,15 @@ class SimplePong < BasicGame
 
   def reset_state
     @paddle_x = 200
-    @ball_x   = 200
-    @ball_y   = 200
-    @ball_angle = 45 # start moving up+right
+    @ball.reset
   end
 
   # Main rendering function
   #
   def render container, graphics
     # Draw background, then ball, then paddle
-    @bg.draw  0,0
-    @ball.draw  @ball_x, @ball_y
+    @bg.draw
+    @ball.draw
     @paddle.draw  @paddle_x, PADDLE_HEIGHT
     # Draw message
     text = 'Arrows to control, ESC to quit'
@@ -76,33 +75,33 @@ class SimplePong < BasicGame
   end
 
   def ball_touches_wall?
-    @ball_x > @max_ball_x || 
-    @ball_y < @min_ball_y ||
-    @ball_x < @min_ball_x
+    @ball.x > @max_ball_x || 
+    @ball.y < @min_ball_y ||
+    @ball.x < @min_ball_x
   end
 
   def update_ball container, delta
-    @ball_x += GAME_SPEED * delta * Math.cos(@ball_angle * RAD)
-    @ball_y -= GAME_SPEED * delta * Math.sin(@ball_angle * RAD)
+    @ball.x += GAME_SPEED * delta * Math.cos(@ball.ang * RAD)
+    @ball.y -= GAME_SPEED * delta * Math.sin(@ball.ang * RAD)
 
     if ball_touches_wall?
-      @ball_angle = (@ball_angle + 90) % 360
+      @ball.ang = (@ball.ang + 90) % 360
     end
   end
 
   def ball_touches_paddle?
-    @ball_x >= @paddle_x && 
-    @ball_x <= (@paddle_x + @paddle.width) && 
-    @ball_y.round >= (PADDLE_HEIGHT - @ball.height)    
+    @ball.x >= @paddle_x && 
+    @ball.x <= (@paddle_x + @paddle.width) && 
+    @ball.y.round >= (PADDLE_HEIGHT - @ball.height)    
   end
 
   def ball_fallen?
-    @ball_y > @max_ball_y
+    @ball.y > @max_ball_y
   end
 
   def ball_paddle_interaction
     if ball_touches_paddle?
-      @ball_angle = (@ball_angle + 90) % 360
+      @ball.ang = (@ball.ang + 90) % 360
     end
   end
 
