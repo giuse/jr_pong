@@ -1,25 +1,20 @@
 
 ### Installation
-- Install `rvm` and `jruby` with this command: 
-  ```
-  \curl -sSL https://get.rvm.io | bash -s stable --ruby=jruby
-  ```
+- Install `rvm` and `jruby` with `\curl -sSL https://get.rvm.io | bash -s stable --ruby=jruby`
 - Check everything's fine with `ruby -v` (should return `jruby` + version)
+- Install prerequisite libraries (gems) with `bundle install`
 - Launch the game from the main folder with `ruby jr_pong.rb`
 
 ### Remember that in Ruby:
-- Variable names starting with an `@` refer to instance variables, 
-  and as such they have instance scope and visibility
+- Variable names starting with an `@` refer to instance variables, and as such they have instance scope and visibility
 - Variable names without `@` are local to the function scope
 - Variable names all in capital letters are constants
 - Parenthesis after methods names are optional (for parameter passing)
-- Column `:` in front of a name defines a symbol, sort of efficient
-  lightweight string for fast name comparisons
-- Keyword `include` means the module named is "copy and pasted" in place,
-  similarly to C inclusion of files
-- When Java is involved, always fill in the full prototype
+- Column `:` in front of a name defines a symbol, sort of efficient lightweight string for fast name comparisons
+- Keyword `include` means the content of the named module is "copy and pasted" in place, similarly to C inclusion of files
+- "When Java is involved, always fill in the full prototype"
 
 ### TODO
 - Make ball rotate either direction depending on touched wall and previous
   direction
-- 
+- Object Oriented design
