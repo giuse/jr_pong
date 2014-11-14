@@ -1,8 +1,8 @@
 $:.push File.expand_path('../lib', __FILE__)
 
-require "java"
-require "lwjgl.jar"
-require "slick.jar"
+require 'java'
+require 'lwjgl.jar'
+require 'slick.jar'
 
 java_import org.newdawn.slick.BasicGame
 java_import org.newdawn.slick.GameContainer
@@ -12,13 +12,22 @@ java_import org.newdawn.slick.Input
 java_import org.newdawn.slick.SlickException
 java_import org.newdawn.slick.AppGameContainer
 
+GRAPHICS_PATH = 'graphics'
+BG_IMG = 'bg.png'
+BALL_IMG = 'ball.png'
+PADDLE_IMG = 'paddle.png'
+
+BG = File.join(GRAPHICS_PATH, BG_IMG)
+BALL = File.join(GRAPHICS_PATH, BALL_IMG)
+PADDLE = File.join(GRAPHICS_PATH, PADDLE_IMG)
+
 class Demo < BasicGame
 
   # When Java is involved, always fill in the prototype  
   def init container
-    @bg = Image.new 'bg.png'
-    @ball = Image.new 'ball.png'
-    @paddle = Image.new 'paddle.png'
+    @bg = Image.new BG
+    @ball = Image.new BALL
+    @paddle = Image.new PADDLE
     @paddle_x = 200
     @ball_x = 200
     @ball_y = 200
