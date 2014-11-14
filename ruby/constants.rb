@@ -2,23 +2,20 @@
 module Constants
   module Graphics
     GRAPHICS_PATH = 'graphics'
-    BG_IMG        = 'bg.png'
-    BALL_IMG      = 'ball.png'
-    PADDLE_IMG    = 'paddle.png'
-
-    BG     = File.join(GRAPHICS_PATH, BG_IMG)
-    BALL   = File.join(GRAPHICS_PATH, BALL_IMG)
-    PADDLE = File.join(GRAPHICS_PATH, PADDLE_IMG)
-
-    PADDLE_HEIGHT = 400
+    BG_IMG     = File.join(GRAPHICS_PATH, 'bg.png')
+    BALL_IMG   = File.join(GRAPHICS_PATH, 'ball.png')
+    PADDLE_IMG = File.join(GRAPHICS_PATH, 'paddle.png')
   end
 
   module Dynamics
     GAME_SPEED = 0.3
+    PADDLE_HEIGHT = 400
   end
 
   module Misc
+    # Starting `::` denotes root module
     RAD = ::Math::PI / 180
-    TEXT_HEIGHT = 8
+    FONT_SIZE = 8
+    MESSAGE_HEIGHT = 30
   end
 end
