@@ -19,6 +19,8 @@ $:.unshift File.expand_path('../ruby',__FILE__)
 require 'pong'
 
 # Application launch
+CONTAINER_SIZE = [640, 480]
 app = AppGameContainer.new Pong.new 'Pong'
-app.set_display_mode 640, 480, false
+app.set_display_mode *CONTAINER_SIZE, false
+
 app.start
