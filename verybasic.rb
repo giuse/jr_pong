@@ -51,6 +51,13 @@ class Demo < BasicGame
     if (@ball_x > container.width - @ball.width) || (@ball_y < 0) || (@ball_x < 0)
       @ball_angle = (@ball_angle + 90) % 360
     end
+
+    if @ball_y > container.height
+      @paddle_x = 200
+      @ball_x = 200
+      @ball_y = 200
+      @ball_angle = 45
+    end
   end
 end
 
