@@ -36,6 +36,13 @@ class Demo < BasicGame
     # Grab input
     input = container.get_input
     container.exit if input.is_key_down Input::KEY_ESCAPE
+
+    @ball_x += 0.3 * delta * Math.cos(@ball_angle * Math::PI / 180)
+    @ball_y -= 0.3 * delta * Math.sin(@ball_angle * Math::PI / 180)
+
+    if (@ball_x > container.width - @ball.width) || (@ball_y < 0) || (@ball_x < 0)
+      @ball_angle = (@ball_angle + 90) % 360
+    end
   end
 end
 
