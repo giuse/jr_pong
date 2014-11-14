@@ -17,11 +17,11 @@ class SimplePong < BasicGame
   #
   def init container
     # Background is a fullscreen png
-    @bg     = Background.new BG_IMG
+    @bg     = Background.new  BG_IMG
     # Ball has a x and y coordinate, plus angle of motion direction
-    @ball   = Ball.new BALL_IMG, [200, 200, 45]
+    @ball   = Ball.new  BALL_IMG, [200, 200, 45]
     # Paddle has fixed y, and x corresponds to the left corner
-    @paddle = Image.new PADDLE_IMG
+    @paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT]
 
     # Screen boundaries for ball
     @min_ball_x = @min_ball_y = 0
@@ -35,7 +35,7 @@ class SimplePong < BasicGame
   end
 
   def reset_state
-    @paddle_x = 200
+    @paddle.reset
     @ball.reset
   end
 
@@ -45,7 +45,7 @@ class SimplePong < BasicGame
     # Draw background, then ball, then paddle
     @bg.draw
     @ball.draw
-    @paddle.draw  @paddle_x, PADDLE_HEIGHT
+    @paddle.draw
     # Draw message
     text = 'Arrows to control, ESC to quit'
     place = container.height - MESSAGE_HEIGHT
@@ -59,18 +59,18 @@ class SimplePong < BasicGame
   end
 
   def paddle_touches_left_wall?
-    @paddle_x <= @min_paddle_x
+    @paddle.x <= @min_paddle_x
   end
   def paddle_touches_right_wall?
-    @paddle_x >= @max_paddle_x
+    @paddle.x >= @max_paddle_x
   end
 
   def update_paddle container, delta, input
     if input.is(:left) && ! paddle_touches_left_wall?
-      @paddle_x -= GAME_SPEED * delta
+      @paddle.x -= GAME_SPEED * delta
     end
     if input.is(:right) && ! paddle_touches_right_wall?
-      @paddle_x += GAME_SPEED * delta
+      @paddle.x += GAME_SPEED * delta
     end
   end
 
@@ -90,8 +90,8 @@ class SimplePong < BasicGame
   end
 
   def ball_touches_paddle?
-    @ball.x >= @paddle_x && 
-    @ball.x <= (@paddle_x + @paddle.width) && 
+    @ball.x >= @paddle.x && 
+    @ball.x <= (@paddle.x + @paddle.width) && 
     @ball.y.round >= (PADDLE_HEIGHT - @ball.height)    
   end
 
