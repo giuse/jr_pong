@@ -30,7 +30,7 @@ class SimplePong < BasicGame
                           [container.width, container.height], @paddle)
     # Playing instructions are displayed on bottom of the screen
     @msg = Elements::Message.new 'Arrows to control, ESC to quit',
-             FONT_SIZE, container.height - MESSAGE_HEIGHT
+             FONT_SIZE, container.height - MESSAGE_HEIGHT, @ball
   end
 
   # Main rendering function

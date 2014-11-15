@@ -63,11 +63,11 @@ module Elements
     #######################
 
     def bounce_sides
-      self.ang = -ang % (2*PI)
+      self.ang = (PI-ang) % (2*PI)
     end
 
     def bounce_up_down
-      self.ang = -ang % (2*PI)
+      self.ang = -ang % (2*PI) # would be `2*PI-ang`, but module eats it
     end
 
     def move delta, speed
