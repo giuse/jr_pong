@@ -7,6 +7,8 @@ class Background
   def draw
     @img.draw  0, 0
   end
+
+  def reset() end
 end
 
 

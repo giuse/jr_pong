@@ -16,12 +16,14 @@ class SimplePong < BasicGame
   # Main game initialization
   #
   def init container
+    # Array of objects to be drawn in correct order
+    @objs = []
     # Background is a fullscreen png
-    @bg     = Background.new  BG_IMG
+    @objs << (@bg     = Background.new  BG_IMG)
     # Ball has a x and y coordinate, plus angle of motion direction
-    @ball   = Ball.new  BALL_IMG, [200, 200, 45]
+    @objs << (@ball   = Ball.new  BALL_IMG, [200, 200, 45])
     # Paddle has fixed y, and x corresponds to the left corner
-    @paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT]
+    @objs << (@paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT])
 
     # Screen boundaries for ball
     @min_ball_x = @min_ball_y = 0
@@ -35,17 +37,14 @@ class SimplePong < BasicGame
   end
 
   def reset_state
-    @paddle.reset
-    @ball.reset
+    @objs.each &:reset
   end
 
   # Main rendering function
   #
   def render container, graphics
-    # Draw background, then ball, then paddle
-    @bg.draw
-    @ball.draw
-    @paddle.draw
+    # Draw objects
+    @objs.each &:draw
     # Draw message
     text = 'Arrows to control, ESC to quit'
     place = container.height - MESSAGE_HEIGHT
