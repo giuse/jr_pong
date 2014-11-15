@@ -22,12 +22,12 @@ class SimplePong < BasicGame
     @objs = []
     # Background is a fullscreen png
     objs << (@bg     = Elements::Background.new  BG_IMG)
-    # Ball has a x and y coordinate, plus angle of motion direction
-    objs << (@ball   = Elements::Ball.new  BALL_IMG, [200, 200, 45],
-                          [container.width, container.height])
     # Paddle moves along a fixed y, and x corresponds to its left corner
     objs << (@paddle = Elements::Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
                           container.width)
+    # Ball has a x and y coordinate, plus angle of motion direction
+    objs << (@ball   = Elements::Ball.new  BALL_IMG, [200, 200, nil],
+                          [container.width, container.height], @paddle)
     # Playing instructions are displayed on bottom of the screen
     @msg = Elements::Message.new 'Arrows to control, ESC to quit',
              FONT_SIZE, container.height - MESSAGE_HEIGHT
@@ -45,26 +45,12 @@ class SimplePong < BasicGame
     container.exit if input.is(:esc)    
     input
   end
-
-  def ball_touches_paddle?
-    @ball.x >= @paddle.x && 
-    @ball.x <= (@paddle.x + @paddle.width) && 
-    @ball.y.round >= (PADDLE_HEIGHT - @ball.height)    
-  end
-
-  def ball_paddle_interaction
-    if ball_touches_paddle?
-      @ball.rotate
-    end
-  end
-
   # Main updating function
   #
   def update container, delta
     input = grab_input  container
     @paddle.update  container, delta, input, GAME_SPEED
     @ball.update  container, delta, GAME_SPEED
-    ball_paddle_interaction
     @objs.each(&:reset) if @ball.fallen?
   end
 end

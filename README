@@ -21,3 +21,4 @@
 ### TODO
 - Make ball rotate either direction depending on touched wall and previous
   direction
+- attr_accessor in pong.rb
