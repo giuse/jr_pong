@@ -1,8 +1,8 @@
 module Elements
   class Background < Base
     def initialize *args
-      @x=@y=0
       super
+      @x=@y=0
     end
     def reset()  end
     def update(*) end

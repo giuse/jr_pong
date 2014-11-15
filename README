@@ -1,8 +1,9 @@
 
 ### Installation
 - Install `rvm` and `jruby` with `\curl -sSL https://get.rvm.io | bash -s stable --ruby=jruby`
-- Check everything's fine with `ruby -v` (should return `jruby` + version)
-- Install prerequisite libraries (gems) with `bundle install`
+- Extract the project (you probably already have if you're reading this) into a folder, now `cd` into it (close terminal and do it again if you did it before)
+- Check ruby's fine with `ruby -v` (should return `jruby` + version)
+- Install prerequisite libraries (`gems`) with `bundle install`
 - Launch the game from the main folder with `ruby jr_pong.rb`
 
 ### Remember that in Ruby:
@@ -10,13 +11,13 @@
 - Instance variables do not need declaration, and have `nil` value until assigned otherwise
 - Variable names without `@` are local to the function scope
 - Variable names all in capital letters are constants
-- Method `attr_reader` generates getters for the variables named in the parameters
-- Method `attr_accessor` generates both getters and setters for the variables named in the parameters
+- Method `attr_reader` generates getters for the variables named in the parameters - respectively `attr_writer` for setters, and `attr_accessor` for both
 - Multiple assignment is possible (es. `a,b,c=[1,2,3]; print b #=> 2`)
-- Parenthesis after methods names are optional (for parameter passing)
-- Column `:` in front of a name defines a symbol, sort of efficient lightweight string for fast name comparisons
+- Parenthesis after methods names are optional (both method declaration and calling with parameters)
+- Column `:` in front of a name defines a symbol, see it as a sort of efficient lightweight string for fast name comparisons
 - Keyword `include` means the content of the named module is "copy and pasted" in place, similarly to C inclusion of files
 - "When Java is involved, always fill in the full prototype"
+- In Ruby, like Java, everything is passed "by reference", but then copies are made by some functions as return values.
 
 ### TODO
 - scoring and best score

@@ -7,8 +7,8 @@ module Elements
     def right() x+width end
 
     def initialize img_path, init_data, max_width
-      @init_x, @y = init_data
       super img_path
+      @init_x, @y = init_data
 
       # Screen boundaries for paddle (y is fixed)
       @min_x = 0

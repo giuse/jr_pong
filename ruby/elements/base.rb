@@ -14,7 +14,6 @@ module Elements
 
     def initialize img_path
       @img = Image.new img_path
-      reset
     end
 
     def draw

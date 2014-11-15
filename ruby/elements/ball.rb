@@ -9,8 +9,8 @@ module Elements
     attr_accessor :ang
 
     def initialize img_path, init_data, container_size, paddle
-      @init_x, @init_y, @init_ang = init_data
       super img_path
+      @init_x, @init_y, @init_ang = init_data
 
       # Bind to paddle
       @paddle = paddle

@@ -19,20 +19,20 @@ class SimplePong < BasicGame
   # Main game initialization
   #
   def init container
-    self.game_speed = GAME_SPEED
     # Array of objects to be drawn in correct order
-    self.objs = []
+    @objs = []
     # Background is a fullscreen png
-    objs << (@bg     = Elements::Background.new  BG_IMG)
+    objs << (Elements::Background.new  BG_IMG)
     # Paddle moves along a fixed y, and x corresponds to its left corner
     objs << (@paddle = Elements::Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
-                          container.width)
+              container.width)
     # Ball has a x and y coordinate, plus angle of motion direction
-    objs << (@ball   = Elements::Ball.new  BALL_IMG, [200, 200, nil],
-                          [container.width, container.height], @paddle)
+    objs << (@ball = Elements::Ball.new  BALL_IMG, [200, 200, nil],
+              [container.width, container.height], @paddle)
     # Playing instructions are displayed on bottom of the screen
-    self.msg = Elements::Message.new 'Arrows to control, ESC to quit',
+    @msg = Elements::Message.new 'Arrows to control, ESC to quit',
              FONT_SIZE, container.height - MESSAGE_HEIGHT, @ball
+    reset
   end
 
   # Main rendering function
@@ -43,9 +43,9 @@ class SimplePong < BasicGame
   end
 
   def grab_input container
-    input = container.get_input
-    container.exit if input.is(:esc)    
-    input
+    container.get_input.tap do |input|
+      container.exit if input.is(:esc)    
+    end
   end
 
   def reset
@@ -53,18 +53,14 @@ class SimplePong < BasicGame
     self.game_speed = GAME_SPEED
   end
 
-  def update *args
-    objs.each do |obj| 
-      obj.update(*args)
-    end
-  end
-
   # Main updating function
   #
   def update container, delta
     self.game_speed += GAME_SPEED_INCREMENT # come get some!
     input = grab_input  container
-    update  container, delta, input, game_speed
+    objs.each do |obj| 
+      obj.update(container, delta, input, game_speed)
+    end
     reset if @ball.fallen?
   end
 end
