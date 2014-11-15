@@ -33,17 +33,20 @@ module Elements
     def touches_right_wall?
       x >= max_x
     end
+    def touches_sides?
+      touches_left_wall? || 
+      touches_right_wall?
+    end
     def touches_ceiling?
       y <= min_y
-    end
-    def touches_wall?
-      touches_left_wall? || 
-      touches_right_wall? ||
-      touches_ceiling?
     end
     def touches_paddle?
       x.between?(paddle.left, paddle.right) &&
       y.between?(paddle.y-height, paddle.y-height/10) # no "late catches"
+    end
+    def touches_up_down?
+      touches_ceiling? ||
+      touches_paddle?
     end
     def touches_left_paddle_corner?
       x.between?(paddle.left, paddle.left + corner_size) 
@@ -55,6 +58,23 @@ module Elements
       y >= max_y + height - 1 # +height-1 for almost-out-of-screen
     end
 
+    #######################
+    # Movement directives #
+    #######################
+
+    def bounce_sides
+      self.ang = -ang % (2*PI)
+    end
+
+    def bounce_up_down
+      self.ang = -ang % (2*PI)
+    end
+
+    def move delta, speed
+      self.x += speed * delta * cos(ang)
+      self.y -= speed * delta * sin(ang)
+    end
+
     ##################
     # Game mechanics #
     ##################
@@ -62,74 +82,14 @@ module Elements
     def reset
       self.x   = init_x
       self.y   = init_y
-      self.ang = init_ang || NE # north-east - see below, #bounce
+      self.ang = init_ang || PI/4
     end
 
     def update container, delta, speed
-      try_bounce
-      self.x += speed * delta * Math.cos(ang)
-      self.y -= speed * delta * Math.sin(ang)
+      bounce_sides   if touches_sides?
+      bounce_up_down if touches_up_down?
+      move  delta, speed
     end
 
-    NE = PI * 1/4
-    NO = PI * 3/4
-    SO = PI * 5/4
-    SE = PI * 7/4
-    def try_bounce
-
-      case
-        when touches_right_wall?
-          case ang
-            when NE
-              self.ang = NO
-            when SE
-              self.ang = SO
-          else
-            # raise "impossible"
-          end
-          
-        when touches_left_wall?
-          case ang
-            when NO
-              self.ang = NE
-            when SO
-              self.ang = SE
-          else
-            # raise "impossible"
-          end
-          
-        when touches_ceiling?
-          case ang
-            when NO
-              self.ang = SO
-            when NE
-              self.ang = SE
-          else
-            # raise "impossible"
-          end
-
-        when touches_paddle?
-          case ang
-            when SO
-              if touches_right_paddle_corner?
-                self.ang == NE
-              else
-                self.ang = NO
-              end
-            when SE
-              if touches_left_paddle_corner?
-                self.ang = NO
-              else
-                self.ang = NE
-              end
-          else
-            # raise "impossible"
-          end
-
-      else
-        # not touching -> not bouncing
-      end
-
-    end
   end # class
 end # module
