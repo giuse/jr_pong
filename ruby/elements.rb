@@ -1,4 +1,3 @@
-require 'constants'
 
 require 'elements/base'
 require 'elements/background'

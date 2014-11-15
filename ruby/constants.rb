@@ -17,8 +17,4 @@ module Constants
     FONT_SIZE = 8
     MESSAGE_HEIGHT = 30
   end
-
-  module Ball
-    RAD = ::Math::PI / 180
-  end
 end
