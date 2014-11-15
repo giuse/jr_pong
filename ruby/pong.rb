@@ -24,16 +24,13 @@ class SimplePong < BasicGame
     @objs << (@ball   = Ball.new  BALL_IMG, [200, 200, 45],
               [container.width, container.height])
     # Paddle has fixed y, and x corresponds to the left corner
-    @objs << (@paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT])
+    @objs << (@paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
+              container.width)
 
-    # Screen boundaries for paddle (y is fixed)
-    @min_paddle_x = 0
-    @max_paddle_x = container.width - @paddle.width
-
-    reset_state
+    reset
   end
 
-  def reset_state
+  def reset
     @objs.each &:reset
   end
 
@@ -54,22 +51,6 @@ class SimplePong < BasicGame
     input
   end
 
-  def paddle_touches_left_wall?
-    @paddle.x <= @min_paddle_x
-  end
-  def paddle_touches_right_wall?
-    @paddle.x >= @max_paddle_x
-  end
-
-  def update_paddle container, delta, input
-    if input.is(:left) && ! paddle_touches_left_wall?
-      @paddle.x -= GAME_SPEED * delta
-    end
-    if input.is(:right) && ! paddle_touches_right_wall?
-      @paddle.x += GAME_SPEED * delta
-    end
-  end
-
   def ball_touches_paddle?
     @ball.x >= @paddle.x && 
     @ball.x <= (@paddle.x + @paddle.width) && 
@@ -86,9 +67,9 @@ class SimplePong < BasicGame
   #
   def update container, delta
     input = grab_input  container
-    update_paddle  container, delta, input
+    @paddle.update  container, delta, input, GAME_SPEED
     @ball.update  container, delta, GAME_SPEED
-    reset_state if @ball.fallen?
     ball_paddle_interaction
+    reset if @ball.fallen?
   end
 end
