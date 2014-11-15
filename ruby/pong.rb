@@ -21,7 +21,7 @@ class SimplePong < BasicGame
   def init container
     self.game_speed = GAME_SPEED
     # Array of objects to be drawn in correct order
-    @objs = []
+    self.objs = []
     # Background is a fullscreen png
     objs << (@bg     = Elements::Background.new  BG_IMG)
     # Paddle moves along a fixed y, and x corresponds to its left corner
@@ -31,7 +31,7 @@ class SimplePong < BasicGame
     objs << (@ball   = Elements::Ball.new  BALL_IMG, [200, 200, nil],
                           [container.width, container.height], @paddle)
     # Playing instructions are displayed on bottom of the screen
-    @msg = Elements::Message.new 'Arrows to control, ESC to quit',
+    self.msg = Elements::Message.new 'Arrows to control, ESC to quit',
              FONT_SIZE, container.height - MESSAGE_HEIGHT, @ball
   end
 
@@ -49,17 +49,22 @@ class SimplePong < BasicGame
   end
 
   def reset
-    @objs.each(&:reset)
+    objs.each(&:reset)
     self.game_speed = GAME_SPEED
+  end
+
+  def update *args
+    objs.each do |obj| 
+      obj.update(*args)
+    end
   end
 
   # Main updating function
   #
   def update container, delta
-    @game_speed += GAME_SPEED_INCREMENT # get in some challenge
+    self.game_speed += GAME_SPEED_INCREMENT # come get some!
     input = grab_input  container
-    @paddle.update  container, delta, input, game_speed
-    @ball.update  container, delta, game_speed
+    update  container, delta, input, game_speed
     reset if @ball.fallen?
   end
 end

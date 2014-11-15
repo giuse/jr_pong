@@ -5,6 +5,6 @@ module Elements
       super
     end
     def reset()  end
-    def update() end
+    def update(*) end
   end
 end

@@ -25,7 +25,7 @@ module Elements
       raise NotImplementedError
     end
 
-    def update
+    def update container, delta, input, game_speed
       raise NotImplementedError
     end
   end # class

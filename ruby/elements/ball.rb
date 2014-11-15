@@ -85,10 +85,10 @@ module Elements
       self.ang = init_ang || PI/4
     end
 
-    def update container, delta, speed
+    def update container, delta, input, game_speed
       bounce_sides   if touches_sides?
       bounce_up_down if touches_up_down?
-      move  delta, speed
+      move  delta, game_speed
     end
 
   end # class
