@@ -19,12 +19,12 @@ class SimplePong < BasicGame
     # Array of objects to be drawn in correct order
     @objs = []
     # Background is a fullscreen png
-    @objs << (@bg     = Background.new  BG_IMG)
+    @objs << (@bg     = Elements::Background.new  BG_IMG)
     # Ball has a x and y coordinate, plus angle of motion direction
-    @objs << (@ball   = Ball.new  BALL_IMG, [200, 200, 45],
+    @objs << (@ball   = Elements::Ball.new  BALL_IMG, [200, 200, 45],
               [container.width, container.height])
     # Paddle has fixed y, and x corresponds to the left corner
-    @objs << (@paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
+    @objs << (@paddle = Elements::Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
               container.width)
 
     reset
