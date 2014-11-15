@@ -21,7 +21,3 @@
 ### TODO
 - Make ball rotate either direction depending on touched wall and previous
   direction
-- Object Oriented design
-- Forwardable module in objects
-- Class Base
-- 'r' to reset
