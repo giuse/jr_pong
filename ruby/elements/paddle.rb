@@ -1,33 +1,18 @@
 module Elements
+  class Paddle < Base
 
-  class Paddle
-
-    attr_reader  :img, :init_x, :min_x, :max_x, :y
-    attr_accessor  :x
+    attr_reader  :init_x, :min_x, :max_x
+    attr_writer  :x
 
     def initialize img_path, init_data, max_width
-      @img = Image.new  img_path
       @init_x, @y = init_data
+      super img_path
 
       # Screen boundaries for paddle (y is fixed)
       @min_x = 0
       @max_x = max_width - width
-
-      reset
     end
     
-    # TODO: delegators/forwardable
-    def width()  img.width end
-    def height() img.height end
-
-    def reset
-      self.x = init_x
-    end
-
-    def draw
-      img.draw  x, y
-    end
-
     ##################
     # Game mechanics #
     ##################
@@ -39,6 +24,10 @@ module Elements
       x >= max_x
     end
 
+    def reset
+      self.x = init_x
+    end
+
     def update container, delta, input, speed
       if input.is(:left) && ! touches_left_wall?
         self.x -= speed * delta
@@ -46,6 +35,5 @@ module Elements
         self.x += speed * delta
       end
     end
-  end
-  
-end
+  end # class
+end # module
