@@ -3,6 +3,8 @@ module Elements
 
     attr_reader  :init_x, :min_x, :max_x
     attr_writer  :x
+    alias_method :left, :x
+    def right() x+width end
 
     def initialize img_path, init_data, max_width
       @init_x, @y = init_data

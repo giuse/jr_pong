@@ -40,8 +40,8 @@ module Elements
       touches_ceiling?
     end
     def touches_paddle?
-      x >= paddle.x && 
-      x <= (paddle.x + paddle.width) &&
+      x >= paddle.left && 
+      x <= paddle.right &&
       y.between?(paddle.y-height, paddle.y-height/10) # no "late catches"
     end
     def fallen?
