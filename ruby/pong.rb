@@ -21,14 +21,11 @@ class SimplePong < BasicGame
     # Background is a fullscreen png
     @objs << (@bg     = Background.new  BG_IMG)
     # Ball has a x and y coordinate, plus angle of motion direction
-    @objs << (@ball   = Ball.new  BALL_IMG, [200, 200, 45])
+    @objs << (@ball   = Ball.new  BALL_IMG, [200, 200, 45],
+              [container.width, container.height])
     # Paddle has fixed y, and x corresponds to the left corner
     @objs << (@paddle = Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT])
 
-    # Screen boundaries for ball
-    @min_ball_x = @min_ball_y = 0
-    @max_ball_x = container.width - @ball.width
-    @max_ball_y = container.height
     # Screen boundaries for paddle (y is fixed)
     @min_paddle_x = 0
     @max_paddle_x = container.width - @paddle.width
@@ -73,34 +70,15 @@ class SimplePong < BasicGame
     end
   end
 
-  def ball_touches_wall?
-    @ball.x > @max_ball_x || 
-    @ball.y < @min_ball_y ||
-    @ball.x < @min_ball_x
-  end
-
-  def update_ball container, delta
-    @ball.x += GAME_SPEED * delta * Math.cos(@ball.ang * RAD)
-    @ball.y -= GAME_SPEED * delta * Math.sin(@ball.ang * RAD)
-
-    if ball_touches_wall?
-      @ball.ang = (@ball.ang + 90) % 360
-    end
-  end
-
   def ball_touches_paddle?
     @ball.x >= @paddle.x && 
     @ball.x <= (@paddle.x + @paddle.width) && 
     @ball.y.round >= (PADDLE_HEIGHT - @ball.height)    
   end
 
-  def ball_fallen?
-    @ball.y > @max_ball_y
-  end
-
   def ball_paddle_interaction
     if ball_touches_paddle?
-      @ball.ang = (@ball.ang + 90) % 360
+      @ball.rotate
     end
   end
 
@@ -109,8 +87,8 @@ class SimplePong < BasicGame
   def update container, delta
     input = grab_input  container
     update_paddle  container, delta, input
-    update_ball  container, delta
-    reset_state if ball_fallen?
+    @ball.update  container, delta, GAME_SPEED
+    reset_state if @ball.fallen?
     ball_paddle_interaction
   end
 end
