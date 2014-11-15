@@ -9,6 +9,7 @@ module Constants
 
   module Dynamics
     GAME_SPEED = 0.3
+    GAME_SPEED_INCREMENT = 0.001
     PADDLE_HEIGHT = 400
   end
 

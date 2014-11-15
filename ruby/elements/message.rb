@@ -10,7 +10,7 @@ module Elements
     end
     
     def draw graphics
-      add = @ball.nil? ? "" : " - ang=#{@ball.ang/(::Math::PI/4)}"
+      add = @ball.nil? ? "" : " - ball angle is #{@ball.ang/(::Math::PI/4)}/4 PI"
       graphics.draw_string  text+add, font_size, place
     end
     

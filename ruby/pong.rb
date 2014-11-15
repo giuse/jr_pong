@@ -14,10 +14,12 @@ class SimplePong < BasicGame
   include Constants::Misc
 
   attr_reader :objs, :msg
+  attr_accessor :game_speed
 
   # Main game initialization
   #
   def init container
+    self.game_speed = GAME_SPEED
     # Array of objects to be drawn in correct order
     @objs = []
     # Background is a fullscreen png
@@ -45,12 +47,19 @@ class SimplePong < BasicGame
     container.exit if input.is(:esc)    
     input
   end
+
+  def reset
+    @objs.each(&:reset)
+    self.game_speed = GAME_SPEED
+  end
+
   # Main updating function
   #
   def update container, delta
+    @game_speed += GAME_SPEED_INCREMENT # get in some challenge
     input = grab_input  container
-    @paddle.update  container, delta, input, GAME_SPEED
-    @ball.update  container, delta, GAME_SPEED
-    @objs.each(&:reset) if @ball.fallen?
+    @paddle.update  container, delta, input, game_speed
+    @ball.update  container, delta, game_speed
+    reset if @ball.fallen?
   end
 end
