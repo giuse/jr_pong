@@ -7,8 +7,12 @@
 
 ### Remember that in Ruby:
 - Variable names starting with an `@` refer to instance variables, and as such they have instance scope and visibility
+- Instance variables do not need declaration, and have `nil` value until assigned otherwise
 - Variable names without `@` are local to the function scope
 - Variable names all in capital letters are constants
+- Method `attr_reader` generates getters for the variables named in the parameters
+- Method `attr_accessor` generates both getters and setters for the variables named in the parameters
+- Multiple assignment is possible (es. `a,b,c=[1,2,3]; print b #=> 2`)
 - Parenthesis after methods names are optional (for parameter passing)
 - Column `:` in front of a name defines a symbol, sort of efficient lightweight string for fast name comparisons
 - Keyword `include` means the content of the named module is "copy and pasted" in place, similarly to C inclusion of files
@@ -17,4 +21,3 @@
 ### TODO
 - Make ball rotate either direction depending on touched wall and previous
   direction
-- Object Oriented design

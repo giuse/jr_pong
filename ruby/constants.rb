@@ -14,7 +14,6 @@ module Constants
 
   module Misc
     # Starting `::` denotes root module
-    RAD = ::Math::PI / 180
     FONT_SIZE = 8
     MESSAGE_HEIGHT = 30
   end
