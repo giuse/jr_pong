@@ -1,9 +1,10 @@
 module Elements
   class Ball < Base
+    include ::Math
 
     attr_reader  :init_x, :init_y, :init_ang,
                  :min_x, :min_y, :max_x, :max_y,
-                 :paddle
+                 :paddle, :corner_size
     attr_writer  :x, :y
     attr_accessor :ang
 
@@ -13,6 +14,7 @@ module Elements
 
       # Bind to paddle
       @paddle = paddle
+      @corner_size = width/2
 
       # Screen boundaries
       cont_width, cont_height = container_size
@@ -22,7 +24,7 @@ module Elements
     end
 
     #######################
-    # Location predicated #
+    # Location predicates #
     #######################
 
     def touches_left_wall?
@@ -40,9 +42,14 @@ module Elements
       touches_ceiling?
     end
     def touches_paddle?
-      x >= paddle.left && 
-      x <= paddle.right &&
+      x.between?(paddle.left, paddle.right) &&
       y.between?(paddle.y-height, paddle.y-height/10) # no "late catches"
+    end
+    def touches_left_paddle_corner?
+      x.between?(paddle.left, paddle.left + corner_size) 
+    end
+    def touches_right_paddle_corner?
+      x.between?(paddle.right - corner_size, paddle.right) 
     end
     def fallen?
       y >= max_y + height - 1 # +height-1 for almost-out-of-screen
@@ -64,10 +71,10 @@ module Elements
       self.y -= speed * delta * Math.sin(ang)
     end
 
-    NE = ::Math::PI * 1/4
-    NO = ::Math::PI * 3/4
-    SO = ::Math::PI * 5/4
-    SE = ::Math::PI * 7/4
+    NE = PI * 1/4
+    NO = PI * 3/4
+    SO = PI * 5/4
+    SE = PI * 7/4
     def try_bounce
 
       case
@@ -104,9 +111,17 @@ module Elements
         when touches_paddle?
           case ang
             when SO
-              self.ang = NO
+              if touches_right_paddle_corner?
+                self.ang == NE
+              else
+                self.ang = NO
+              end
             when SE
-              self.ang = NE
+              if touches_left_paddle_corner?
+                self.ang = NO
+              else
+                self.ang = NE
+              end
           else
             # raise "impossible"
           end
