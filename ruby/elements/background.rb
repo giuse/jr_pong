@@ -1,13 +1,10 @@
 module Elements
-  class Background
-    def initialize img_path
-      @img = Image.new img_path
+  class Background < Base
+    def initialize *args
+      @x=@y=0
+      super
     end
-
-    def draw
-      @img.draw  0, 0
-    end
-
-    def reset() end
+    def reset()  end
+    def update() end
   end
 end
