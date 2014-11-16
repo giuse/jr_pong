@@ -7,7 +7,7 @@ module Elements
     attr_writer  :x, :y
     attr_accessor :ang
 
-    def initialize img_path, init_data, container_size, paddle
+    def initialize img_path, init_data, box_structure, paddle
       super img_path
       @init_x, @init_y, @init_ang = init_data
 
@@ -15,10 +15,8 @@ module Elements
       @paddle = paddle
 
       # Screen boundaries
-      cont_width, cont_height = container_size
-      @left_wall = @ceiling = 0
-      @right_wall = cont_width - width
-      @bottom = cont_height
+      (@left_wall, @right_wall), (@bottom, @ceiling) = box_structure
+      @right_wall -= width #looks nicer on screen
     end
 
     #######################

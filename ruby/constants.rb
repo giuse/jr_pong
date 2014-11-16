@@ -12,11 +12,25 @@ module Constants
   module Dynamics
     GAME_SPEED = 0.3
     GAME_SPEED_INCREMENT = 0.0005
-    PADDLE_HEIGHT = 400
+    def WALLS(container) [0, container.width] end
+    def BOTTOM_TOP(container) [container.height, 0] end
+    def STRUCTURE(container) [WALLS(container), BOTTOM_TOP(container)] end
   end
 
-  module Misc
-    FONT_SIZE = 8
-    MESSAGE_HEIGHT = 30
+  module Elements
+    module Paddle
+      # Paddle moves along a fixed y, and x corresponds to its left corner
+      PADDLE_INIT = [200, 400]
+    end
+    
+    module Ball
+      # Ball has a x and y coordinate, plus angle of motion direction
+      BALL_INIT = [200, 200, ::Math::PI/4]
+    end
+
+    module Message
+      FONT_SIZE = 8
+      MESSAGE_HEIGHT = 30
+    end
   end
 end
