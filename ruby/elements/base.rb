@@ -5,7 +5,7 @@ module Elements
   # Provides initialization, x, y, width/height, draw.
   # Forces implementation of reset and update.
   class Base
-    extend Forwardable # introduces ::def_delegators
+    extend ::Forwardable # introduces ::def_delegators
 
     attr_reader :x, :y, :img
     # Delegate `width` and `height` calls to the `img` getter above
