@@ -1,18 +1,19 @@
 module Elements
   class Paddle < Base
 
-    attr_reader  :init_x, :min_x, :max_x
+    attr_reader  :init_x, :left_wall, :right_wall, :corner_size
     attr_writer  :x
+    # build `#left` and `#right` getters (`#x` and `#width` come from `Base`)
     alias_method :left, :x
     def right() x+width end
 
-    def initialize img_path, init_data, max_width
-      @init_x, @y = init_data
+    def initialize img_path, init_position, wall_placement
       super img_path
+      @init_x, @y = init_position
+      @corner_size = width/5
 
-      # Screen boundaries for paddle (y is fixed)
-      @min_x = 0
-      @max_x = max_width - width
+      # Horizontal movement boundaries for paddle (y is fixed)
+      @left_wall, @right_wall = wall_placement
     end
     
     ##################
@@ -20,10 +21,11 @@ module Elements
     ##################
 
     def touches_left_wall?
-      x <= min_x
+      left <= left_wall
     end
+    
     def touches_right_wall?
-      x >= max_x
+      right >= right_wall
     end
 
     def reset
@@ -31,10 +33,13 @@ module Elements
     end
 
     def update container, delta, input, speed
-      if input.is(:left) && ! touches_left_wall?
-        self.x -= speed * delta
-      elsif input.is(:right) && ! touches_right_wall?
-        self.x += speed * delta
+      case
+        when input.is(:left) && ! touches_left_wall?
+          self.x -= speed * delta
+        when input.is(:right) && ! touches_right_wall?
+          self.x += speed * delta
+      else
+        # Just ignore other inputs
       end
     end
   end # class
