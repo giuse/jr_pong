@@ -29,3 +29,5 @@ Thanks to the Technology Astronauts for the hardware and the teaching, in partic
 ### TODO
 - scoring and best score
 - refresh-based bug that sticks ball to walls at increasing speed - maybe weight the "late-catch" guard by game speed?
+- add `gem 'pry-stack_explorer` to `Gemfile`
+- reorganize directories (put java/slick away)
