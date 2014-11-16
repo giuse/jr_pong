@@ -1,7 +1,12 @@
+### DISCLAIMER
+This game is just a personal test for JRuby, java videogame libraries, and my current state on the Ruby path. Also, it is meant to be shared with non-rubist friends. It's just a "weekend project", and it all started from here:
+http://www.rubyinside.com/video-game-ruby-tutorial-5726.html
+Dear fellow Peter Cooper is responsible for the main idea, the graphics, inspiration, support, installation, all the initial code (hand-transcripted from the page) and I guess some of the final one too. Please delegate all copyright, ownership, licenses and whatever to the URL above.
+Thanks to the Technology Astronauts for the hardware and the teaching, in particular "your value is in the skills you own, not the code". Ways to go Peter, thanks a bunch! :)
 
 ### Installation
 - Install `rvm` and `jruby` with `\curl -sSL https://get.rvm.io | bash -s stable --ruby=jruby`
-- Extract the project (you probably already have if you're reading this) into a folder, now `cd` into it (close terminal and do it again if you did it before)
+- Clone the project with `git clone git@github.com:giuseppecuccu/jr_pong.git`, and `cd` into it
 - Check ruby's fine with `ruby -v` (should return `jruby` + version)
 - Install prerequisite libraries (`gems`) with `bundle install`
 - Launch the game from the main folder with `ruby jr_pong.rb`
