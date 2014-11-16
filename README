@@ -21,3 +21,4 @@
 
 ### TODO
 - scoring and best score
+- refresh-based bug that sticks ball to walls at increasing speed - maybe weight the "late-catch" guard by game speed?

@@ -13,8 +13,8 @@ class SimplePong < BasicGame
   include Constants::Dynamics
   include Constants::Misc
 
-  attr_reader :objs, :msg, :ball, :paddle, :score
-  attr_accessor :game_speed, :start_time
+  attr_reader :objs, :ball, :paddle, :help_msg, :score_msg
+  attr_accessor :game_speed, :start_time, :max_score
 
   # Main game initialization
   #
@@ -30,20 +30,26 @@ class SimplePong < BasicGame
     objs << (@ball = Elements::Ball.new  BALL_IMG, [200, 200, nil],
               [container.width, container.height], paddle)
     # Playing instructions are displayed on bottom of the screen
-    @msg = Elements::Message.new 'Arrows to control, ESC to quit - ball angle is ',
+    @help_msg = Elements::Message.new 'Arrows to control, ESC to quit',
              FONT_SIZE, container.height - MESSAGE_HEIGHT
     # Scoring on top of screen
-    @score = Elements::Message.new 'Your score: ',
+    @max_score = 0
+    @start_time = Time.now
+    @score_msg = Elements::Message.new 'Your score: ',
              FONT_SIZE, MESSAGE_HEIGHT
     reset
+  end
+
+  def score
+    Time.now - start_time
   end
 
   # Main rendering function
   #
   def render container, graphics
     objs.each &:draw
-    msg.draw  graphics, "#{ball.ang/(::Math::PI/4)}/4 PI"
-    score.draw  graphics, "#{Time.now - start_time}"
+    help_msg.draw  graphics, " - ball angle is #{ball.ang/(::Math::PI/4)}/4 PI"
+    score_msg.draw  graphics, "#{score} - max score: #{max_score}"
   end
 
   def grab_input container
@@ -53,9 +59,10 @@ class SimplePong < BasicGame
   end
 
   def reset
-    objs.each(&:reset)
-    self.game_speed = GAME_SPEED
+    self.max_score = [max_score, score].max
     self.start_time = Time.now
+    self.game_speed = GAME_SPEED
+    objs.each(&:reset)
   end
 
   # Main updating function
