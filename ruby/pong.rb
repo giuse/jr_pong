@@ -13,8 +13,8 @@ class SimplePong < BasicGame
   include Constants::Dynamics
   include Constants::Misc
 
-  attr_reader :objs, :msg
-  attr_accessor :game_speed
+  attr_reader :objs, :msg, :ball, :paddle, :score
+  attr_accessor :game_speed, :start_time
 
   # Main game initialization
   #
@@ -28,10 +28,13 @@ class SimplePong < BasicGame
               container.width)
     # Ball has a x and y coordinate, plus angle of motion direction
     objs << (@ball = Elements::Ball.new  BALL_IMG, [200, 200, nil],
-              [container.width, container.height], @paddle)
+              [container.width, container.height], paddle)
     # Playing instructions are displayed on bottom of the screen
-    @msg = Elements::Message.new 'Arrows to control, ESC to quit',
-             FONT_SIZE, container.height - MESSAGE_HEIGHT, @ball
+    @msg = Elements::Message.new 'Arrows to control, ESC to quit - ball angle is ',
+             FONT_SIZE, container.height - MESSAGE_HEIGHT
+    # Scoring on top of screen
+    @score = Elements::Message.new 'Your score: ',
+             FONT_SIZE, MESSAGE_HEIGHT
     reset
   end
 
@@ -39,7 +42,8 @@ class SimplePong < BasicGame
   #
   def render container, graphics
     objs.each &:draw
-    msg.draw  graphics
+    msg.draw  graphics, "#{ball.ang/(::Math::PI/4)}/4 PI"
+    score.draw  graphics, "#{Time.now - start_time}"
   end
 
   def grab_input container
@@ -51,6 +55,7 @@ class SimplePong < BasicGame
   def reset
     objs.each(&:reset)
     self.game_speed = GAME_SPEED
+    self.start_time = Time.now
   end
 
   # Main updating function
@@ -61,6 +66,6 @@ class SimplePong < BasicGame
     objs.each do |obj| 
       obj.update(container, delta, input, game_speed)
     end
-    reset if @ball.fallen?
+    reset if ball.fallen?
   end
 end
