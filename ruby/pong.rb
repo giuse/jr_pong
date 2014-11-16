@@ -41,7 +41,7 @@ class SimplePong < BasicGame
   end
 
   def score
-    Time.now - start_time
+    ((Time.now - start_time) * 10).round
   end
 
   # Main rendering function
