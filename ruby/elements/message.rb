@@ -12,6 +12,7 @@ module Elements
       graphics.draw_string  text+extra, font_size, place
     end
     
+    # Useless - but need to overload the prototype
     def reset()  end
     def update() end
   end

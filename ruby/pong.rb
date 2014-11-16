@@ -4,11 +4,8 @@ require 'elements'
 # This class works by calling `init` upon construction, then `update`
 # and `render` at each timestep.
 #
-# The class is monolitic rather than OO for the sake of lighter reading:
-# all the game is here, but for the launcher and some constants
-#
 class SimplePong < BasicGame
-  # These modules are defined in ruby/constants.rb
+  # Modules defined in ruby/constants.rb
   include Constants::Graphics
   include Constants::Dynamics
   include Constants::Misc
@@ -25,9 +22,9 @@ class SimplePong < BasicGame
     objs << (Elements::Background.new  BG_IMG)
     # Paddle moves along a fixed y, and x corresponds to its left corner
     objs << (@paddle = Elements::Paddle.new  PADDLE_IMG, [200, PADDLE_HEIGHT],
-              container.width)
+              [0, container.width])
     # Ball has a x and y coordinate, plus angle of motion direction
-    objs << (@ball = Elements::Ball.new  BALL_IMG, [200, 200, nil],
+    objs << (@ball = Elements::Ball.new  BALL_IMG, [200, 200, ::Math::PI/4],
               [container.width, container.height], paddle)
     # Playing instructions are displayed on bottom of the screen
     @help_msg = Elements::Message.new 'Arrows to control, ESC to quit',

@@ -1,15 +1,14 @@
 module Elements
 
-  # Base definition of an element.
-  # Element classes are supposed to subclass this.
+  # Base definition - Elements subclass from here.
   #
   # Provides initialization, x, y, width/height, draw.
   # Forces implementation of reset and update.
   class Base
-    extend Forwardable
+    extend Forwardable # introduces ::def_delegators
 
     attr_reader :x, :y, :img
-    # Delegate `width` and `height` calls to the `img`
+    # Delegate `width` and `height` calls to the `img` getter above
     def_delegators :img, :width, :height
 
     def initialize img_path

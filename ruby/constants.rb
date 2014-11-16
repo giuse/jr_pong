@@ -1,3 +1,5 @@
+# I find myself keeping the magic numbers secluded and organized anyway, 
+# I might just as well let the program understand the separation too.
 
 module Constants
   module Graphics
@@ -9,12 +11,11 @@ module Constants
 
   module Dynamics
     GAME_SPEED = 0.3
-    GAME_SPEED_INCREMENT = 0.001
+    GAME_SPEED_INCREMENT = 0.0005
     PADDLE_HEIGHT = 400
   end
 
   module Misc
-    # Starting `::` denotes root module
     FONT_SIZE = 8
     MESSAGE_HEIGHT = 30
   end
