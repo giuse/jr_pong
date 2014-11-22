@@ -55,15 +55,60 @@ module Elements
     end
 
     #######################
+    # Movement predicates #
+    #######################
+
+    def going_up?
+      ang.between?(0,PI)
+    end
+
+    def going_down?
+      ang.between?(PI,2*PI)
+    end
+
+    def going_left?
+      ang.between?(PI*1/2,PI*3/2)
+    end
+
+    def going_right?
+      ang.between?(0,PI*1/2) ||
+      ang.between?(PI*3/2,2*PI)
+    end
+
+    #######################
     # Movement directives #
     #######################
 
+    # small random angle
+    def rang
+      radious = PI/5
+      rand(-radious..radious)
+    end
+
+    def bounce_left
+      bounce_sides if going_left?
+    end
+
+    def bounce_right
+      bounce_sides if going_right?
+    end
+
+    def bounce_up
+      bounce_up_down if going_up?
+    end
+
+    def bounce_down
+      bounce_up_down if going_down?
+    end
+
     def bounce_sides
-      self.ang = (PI-ang) % (2*PI) # wikipedia -> module -> negative numbers
+      self.ang = (PI-ang + rang) % (2*PI) # wikipedia -> module -> negative numbers
+      # BOUND `x` SO THAT IT DOESN'T PENETRATE!
     end
 
     def bounce_up_down
-      self.ang = (-ang) % (2*PI) # would be `2*PI-ang`, but `%` chomps it anyway
+      self.ang = (-ang + rang) % (2*PI) # would be `2*PI-ang`, but `%` chomps it anyway
+      # BOUND `y` SO THAT IT DOESN'T PENETRATE!
     end
 
     def move delta, speed
@@ -82,8 +127,10 @@ module Elements
     end
 
     def update container, delta, input, game_speed
-      bounce_sides   if touches_sides?
-      bounce_up_down if touches_up_down?
+      bounce_left  if touches_left_wall?
+      bounce_right if touches_right_wall?
+      bounce_up    if touches_ceiling?
+      bounce_down  if touches_paddle?
       move  delta, game_speed
     end
 
