@@ -1,11 +1,9 @@
-# Main
-# The rest of the project is located in folder `ruby/`
+#!/usr/bin/env jruby -J-Djava.library.path=./java
 
 # Java requirements
-$:.push File.expand_path('../lib', __FILE__)
 require 'java'
-require 'lwjgl.jar'
-require 'slick.jar'
+require 'java/lib/lwjgl.jar'
+require 'java/lib/slick.jar'
 java_import org.newdawn.slick.BasicGame
 java_import org.newdawn.slick.GameContainer
 java_import org.newdawn.slick.Graphics
