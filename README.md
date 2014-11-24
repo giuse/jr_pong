@@ -8,8 +8,8 @@ Thanks to the Technology Astronauts for the hardware and the teaching, in partic
 - Install `rvm` and `jruby` with `\curl -sSL https://get.rvm.io | bash -s stable --ruby=jruby`
 - Clone the project with `git clone git@github.com:giuseppecuccu/jr_pong.git`, and `cd` into it
 - Check ruby's fine with `ruby -v` (should return `jruby` + version)
-- Install prerequisite libraries (`gems`) with `bundle install`
-- Launch the game from the main folder with `ruby jr_pong.rb`
+- Install prerequisite libraries (ruby's `gems`) with `bundle install`
+- Launch the game executable from the shell as `./jr_pong.rb`
 
 ### Remember that in Ruby:
 - Variable names starting with an `@` refer to instance variables, and as such they have instance scope and visibility
@@ -29,3 +29,4 @@ Thanks to the Technology Astronauts for the hardware and the teaching, in partic
 ### TODO
 - add `gem 'pry-stack_explorer` to `Gemfile`
 - reorganize directories (put java/slick away)
+- use paddle corners

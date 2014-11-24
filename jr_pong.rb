@@ -14,7 +14,7 @@ java_import org.newdawn.slick.AppGameContainer
 
 # Ruby requirements
 $:.unshift File.expand_path('../ruby',__FILE__)
-require 'pong' # see ruby/pong.rb
+require 'pong'
 
 # BEWARE - MONKEY PATCHING `Java::OrgNewdawnSlick::Input`!
 class Java::OrgNewdawnSlick::Input
@@ -33,7 +33,8 @@ class Java::OrgNewdawnSlick::Input
 end
 
 # Application launch
-WINDOW_SIZE = [640, 480]
+require 'configuration'
+include Configuration::Application
 app = AppGameContainer.new SimplePong.new 'Pong'
 app.set_display_mode(*WINDOW_SIZE, false)
 
