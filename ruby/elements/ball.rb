@@ -2,14 +2,14 @@ module Elements
   class Ball < Base
     include ::Math
 
-    attr_reader  :init_x, :init_y, :init_ang, :paddle,
+    attr_reader  :init_x, :init_y, :init_ang, :srang_radius, :paddle,
                  :left_wall, :right_wall, :ceiling, :bottom
     attr_writer  :x, :y
     attr_accessor :ang
 
     def initialize img_path, init_data, box_structure, paddle
       super img_path
-      @init_x, @init_y, @init_ang = init_data
+      @init_x, @init_y, @init_ang, @srang_radius = init_data
 
       # Bind to paddle (bouncing mechanics)
       @paddle = paddle
@@ -80,9 +80,8 @@ module Elements
     #######################
 
     # small random angle
-    def rang
-      radious = PI/5
-      rand(-radious..radious)
+    def srang
+      rand(-srang_radius..srang_radius)
     end
 
     def bounce_left
@@ -102,12 +101,12 @@ module Elements
     end
 
     def bounce_sides
-      self.ang = (PI-ang + rang) % (2*PI) # wikipedia -> module -> negative numbers
+      self.ang = (PI-ang + srang) % (2*PI) # wikipedia -> module -> negative numbers
       # BOUND `x` SO THAT IT DOESN'T PENETRATE!
     end
 
     def bounce_up_down
-      self.ang = (-ang + rang) % (2*PI) # would be `2*PI-ang`, but `%` chomps it anyway
+      self.ang = (-ang + srang) % (2*PI) # would be `2*PI-ang`, but `%` chomps it anyway
       # BOUND `y` SO THAT IT DOESN'T PENETRATE!
     end
 

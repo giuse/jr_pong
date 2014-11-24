@@ -27,7 +27,5 @@ Thanks to the Technology Astronauts for the hardware and the teaching, in partic
 - The splat operator `*` "captures all remaining arguments in an array" when put in front of a function parameter name, and "passes all content of an array" when in front of an Array. This means that `def f(*args) g(*args) end` means that `g` is called with exactly the same parameters as `f` (practically an alias, like calling `alias_method :g, :f`).
 
 ### TODO
-- scoring and best score
-- refresh-based bug that sticks ball to walls at increasing speed - maybe weight the "late-catch" guard by game speed?
 - add `gem 'pry-stack_explorer` to `Gemfile`
 - reorganize directories (put java/slick away)

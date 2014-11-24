@@ -56,7 +56,7 @@ class SimplePong < BasicGame
   def reset
     self.max_score = [max_score, score].max
     self.start_time = Time.now
-    self.game_speed = GAME_SPEED
+    self.game_speed = GAME_INIT_SPEED
     objs.each(&:reset)
   end
 
