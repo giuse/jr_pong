@@ -1,7 +1,12 @@
 # I find myself keeping the magic numbers secluded and organized anyway, 
 # I might just as well let the program understand the separation too.
 
-module Constants
+module Configuration
+
+  module Application
+    WINDOW_SIZE = [640, 480]
+  end
+
   module Graphics
     GRAPHICS_PATH = 'graphics'
     BG_IMG     = File.join(GRAPHICS_PATH, 'bg.png')

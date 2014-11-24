@@ -1,11 +1,9 @@
-# Main
-# The rest of the project is located in folder `ruby/`
+#!/usr/bin/env jruby -J-Djava.library.path=./java
 
 # Java requirements
-$:.push File.expand_path('../lib', __FILE__)
 require 'java'
-require 'lwjgl.jar'
-require 'slick.jar'
+require 'java/lib/lwjgl.jar'
+require 'java/lib/slick.jar'
 java_import org.newdawn.slick.BasicGame
 java_import org.newdawn.slick.GameContainer
 java_import org.newdawn.slick.Graphics
@@ -16,7 +14,7 @@ java_import org.newdawn.slick.AppGameContainer
 
 # Ruby requirements
 $:.unshift File.expand_path('../ruby',__FILE__)
-require 'pong' # see ruby/pong.rb
+require 'pong'
 
 # BEWARE - MONKEY PATCHING `Java::OrgNewdawnSlick::Input`!
 class Java::OrgNewdawnSlick::Input
@@ -35,7 +33,8 @@ class Java::OrgNewdawnSlick::Input
 end
 
 # Application launch
-WINDOW_SIZE = [640, 480]
+require 'configuration'
+include Configuration::Application
 app = AppGameContainer.new SimplePong.new 'Pong'
 app.set_display_mode(*WINDOW_SIZE, false)
 

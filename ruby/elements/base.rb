@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Elements
 
   # Base definition - Elements subclass from here.
