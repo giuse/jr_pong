@@ -1,16 +1,16 @@
-require 'constants'
+require 'configuration'
 require 'elements'
 
 # This class works by calling `init` upon construction, then `update`
 # and `render` at each timestep.
 #
 class SimplePong < BasicGame
-  # Modules defined in ruby/constants.rb
-  include Constants::Graphics
-  include Constants::Dynamics
-  include Constants::Elements::Paddle
-  include Constants::Elements::Ball
-  include Constants::Elements::Message
+  # Modules defined in ruby/configuration.rb
+  include Configuration::Graphics
+  include Configuration::Dynamics
+  include Configuration::Elements::Paddle
+  include Configuration::Elements::Ball
+  include Configuration::Elements::Message
   include Elements
 
   attr_reader :objs, :ball, :paddle, :help_msg, :score_msg
